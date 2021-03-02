@@ -5,14 +5,25 @@ import cv2 as cv
 #cv.imshow('Trunks',img1)
 
 #2. Reading video
-capture = cv.VideoCapture('./Video/gau.mp4')
-while True:
-    isTrue, frame = capture.read()
-    cv.imshow('Video',frame)
-    if cv.waitKey(20) & 0xFF==ord('d'):
-        break
+#capture = cv.VideoCapture('./Video/gau.mp4')
+#while True:
+    #isTrue, frame = capture.read()
+    #cv.imshow('Video',frame)
+    #if cv.waitKey(20) & 0xFF==ord('d'):
+        #break
+#capture.release()
 
-capture.release()
-cv.destroyAllWindows()
+# 3. Face recogniser
 
-#cv.waitKey(0)
+img = cv.imread('./Photos/family.jpg')
+gray = cv.cvtColor(img, cv.COLOR_RGB2GRAY)
+cv.imshow('Grayscale image',gray)
+
+
+haar_cascade = cv.CascadeClassifier('haar_face.xml')
+
+faces_rect = haar_cascade.detectMultiScale(gray ,scaleFactor=1.1, minNeighbors=3)
+
+print(f'The number of faces found is = {len(faces_rect)}')
+
+cv.waitKey(0)
